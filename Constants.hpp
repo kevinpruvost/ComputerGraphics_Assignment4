@@ -38,6 +38,9 @@ constexpr const char * particleShaderVertex = "resources/Shaders/particle.vert.g
 constexpr const char * particleShaderFrag = "resources/Shaders/particle.frag.glsl";
 // Planets
 constexpr const char * star = "resources/Textures/Star.bmp";
+// Snow
+constexpr const char * snowflake = "resources/Textures/snow2.png";
+constexpr const char * snowyBackground = "resources/Textures/snowy_background.png";
 // Fonts
 constexpr const char * arialFont = "resources/Fonts/arial.ttf";
 constexpr const char * starFont  = "resources/Fonts/star.ttf";

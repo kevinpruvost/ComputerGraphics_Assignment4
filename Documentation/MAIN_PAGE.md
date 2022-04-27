@@ -1,4 +1,4 @@
-# Assignment 3 Documentation
+# Assignment 4 Documentation
 
 Author: Kevin Pruvost (pruvostkevin0@gmail.com)
 
@@ -57,6 +57,8 @@ with an executable file to launch directly.
 - [ParticleSystem_Base](class_particle_system___base.html)
 - [Particle_Spiral](class_particle___spiral.html)
 - [ParticleSystem_Spiral](class_particle_system___spiral.html)
+- [Particle_Snow](class_particle___snow.html)
+- [ParticleSystem_Snow](class_particle_system___snow.html)
 
 ### Text
 

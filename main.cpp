@@ -36,15 +36,13 @@
 #include "OGL_Implementation\Rendering\Rendering.hpp"
 #include "OGL_Implementation\Text\Text.hpp"
 #include "OGL_Implementation\Light\Light.hpp"
-#include "OGL_Implementation\Entity\ParticleSystem\Spirals\ParticleSystem_Spirals.hpp"
+#include "OGL_Implementation\Entity\ParticleSystem\Snow\ParticleSystem_Snow.hpp"
 
 // Constants
 #include "Constants.hpp"
 
 // pointers to model / view / projection matrices
 glm::mat4 model(1);
-
-std::vector<Font> fonts;
 
 // The MAIN function, from here we start the application and run the game loop
 int main()
@@ -62,17 +60,17 @@ int main()
 		return EXIT_FAILURE;
 	}
 
-	ParticleSystem_Spiral spiralSystem(
+	ParticleSystem_Snow snowSystem(
 		*Rendering::shaders.at(Constants::Paths::pointShaderVertex),
 		*Rendering::shaders.at(Constants::Paths::wireframeShaderVertex),
 		*Rendering::shaders.at(Constants::Paths::particleShaderVertex)
 	);
-	spiralSystem.texture = starTexture;
-	spiralSystem.lifeSpan = 30.0f;
-	spiralSystem.polarSpeed = 3.0f;
-	spiralSystem.particleSpeed = 5.0f;
-	spiralSystem.frequency = 5;
-	spiralSystem.maxParticles = 500;
+	snowSystem.texture = starTexture;
+	snowSystem.lifeSpan = 30.0f;
+	snowSystem.polarSpeed = 3.0f;
+	snowSystem.particleSpeed = 5.0f;
+	snowSystem.frequency = 5;
+	snowSystem.maxParticles = 500;
 
 	Camera camera(window->windowWidth(), window->windowHeight(), 0.0f, 0.0f, -50.0f);
 	camera.MovementSpeed *= 5.0f;
@@ -116,38 +114,33 @@ int main()
 			}
 		}
 
-		ImGui::SliderFloat3("Position", glm::value_ptr(spiralSystem.pos), 0.0f, 5.0f);
-		ImGui::SliderFloat3("Scale", glm::value_ptr(spiralSystem.scale), 0.0f, 5.0f);
+		ImGui::SliderFloat3("Position", glm::value_ptr(snowSystem.pos), 0.0f, 5.0f);
+		ImGui::SliderFloat3("Scale", glm::value_ptr(snowSystem.scale), 0.0f, 5.0f);
 
-		ImGui::SliderFloat("Polar Speed", &spiralSystem.polarSpeed, 0.0f, 4.0f);
-		ImGui::SliderFloat("Particle Speed", &spiralSystem.particleSpeed, 0.0f, 20.0f);
+		ImGui::SliderFloat("Polar Speed", &snowSystem.polarSpeed, 0.0f, 4.0f);
+		ImGui::SliderFloat("Particle Speed", &snowSystem.particleSpeed, 0.0f, 20.0f);
 
-		ImGui::SliderFloat("Alpha", &spiralSystem.alpha, 0.0f, 5.0f);
-		ImGui::SliderFloat("Beta", &spiralSystem.beta, 0.0f, 5.0f);
+		ImGui::SliderFloat("Frequency", &snowSystem.frequency, 0.0f, 10.0f);
+		ImGui::SliderFloat("Life Span", &snowSystem.lifeSpan, 0.0f, 60.0f);
+		ImGui::SliderInt("Max Particles", (int *)&snowSystem.maxParticles, 0, 5000);
 
-		ImGui::SliderFloat("Frequency", &spiralSystem.frequency, 0.0f, 10.0f);
-		ImGui::SliderFloat("Life Span", &spiralSystem.lifeSpan, 0.0f, 60.0f);
-		ImGui::SliderInt("Max Particles", (int *)&spiralSystem.maxParticles, 0, 5000);
-		const char * const spiralFormulaModeItems[3] = { "Archimedes Spiral", "Fermat Spiral", "Logarithmic Spiral" };
-		ImGui::Combo("Spiral Formula", (int *)&spiralSystem.spiralType, spiralFormulaModeItems, IM_ARRAYSIZE(spiralFormulaModeItems));
+		ImGui::LabelText("Entities Count", "%d\n", snowSystem.GetParticles().size());
 
-		ImGui::LabelText("Entities Count", "%d\n", spiralSystem.GetParticles().size());
-
-		if (ImGui::Button(spiralSystem.isStopped() ? "Start" : "Stop", { width / 2.5f, 50.0f}))
+		if (ImGui::Button(snowSystem.isStopped() ? "Start" : "Stop", { width / 2.5f, 50.0f}))
 		{
-			spiralSystem.isStopped() ? spiralSystem.Start() : spiralSystem.Stop();
+			snowSystem.isStopped() ? snowSystem.Start() : snowSystem.Stop();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Reset", { width / 2.5f, 50.0f }))
 		{
-			spiralSystem.Reset();
+			snowSystem.Reset();
 		}
 
 		ImGui::End();
 		return true;
 	});
 
-	camera.LookAt(spiralSystem.pos);
+	camera.LookAt(snowSystem.pos);
 
 	float backgroundColor[4] = { 0.15f, 0.3f, 0.4f, 1.0f };
 
@@ -214,11 +207,11 @@ int main()
 
 		Rendering::Refresh();
 
-		spiralSystem.Update();
-		spiralSystem.displayMode = DisplayMode;
+		snowSystem.Update();
+		snowSystem.displayMode = DisplayMode;
 
 		// display mode & activate shader
-		Rendering::DrawParticleSystem(&spiralSystem);
+		Rendering::DrawParticleSystem(&snowSystem);
 		/*for (auto e : { })
 		{
 			if (DisplayMode & RenderingMode::VerticesMode)  Rendering::DrawVertices(*e);
