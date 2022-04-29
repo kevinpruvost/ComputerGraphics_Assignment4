@@ -148,6 +148,35 @@ void Rendering::RotateWireframeColor()
 	std::rotate(WireframeColors.begin(), WireframeColors.begin() + 1, WireframeColors.end());
 }
 
+void Rendering::DrawImage(Image2D & image)
+{
+	image.shaderFace.Use();
+
+	glDepthMask(GL_FALSE);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, image.texture.GetTexture());
+	glBindVertexArray(image.mesh.facesVAO());
+
+	const glm::vec2 & wDimensions = mainCamera->GetWindowDimensions();
+
+	const GLfloat vertices[4][4] = {
+		{ 0.0, 0.0,   0.0, 0.0 },
+		{ wDimensions.x, 0.0,   1.0, 0.0 },
+		{ 0.0, wDimensions.y,   0.0, 1.0 },
+		{ wDimensions.x, wDimensions.y,   1.0, 1.0 }
+	};
+
+	glBindBuffer(GL_ARRAY_BUFFER, image.mesh.facesVBO());
+	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices); // Be sure to use glBufferSubData and not glBufferData
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+
+	glBindVertexArray(0);
+
+	glDepthMask(GL_TRUE);
+}
+
 void Rendering::DrawText(Text2D & text)
 {
 	text.shader.Use();
@@ -303,18 +332,22 @@ void Rendering::LoadShadersAndFonts()
 	Shader lightShader = GenerateShader(Constants::Paths::lightShaderVertex, Constants::Paths::lightShaderFrag);
 	Shader pointShader = GenerateShader(Constants::Paths::pointShaderVertex, Constants::Paths::pointShaderFrag);
 	Shader faceShader = GenerateShader(Constants::Paths::faceShaderVertex, Constants::Paths::faceShaderFrag);
+	Shader face2DShader = GenerateShader(Constants::Paths::face2DShaderVertex, Constants::Paths::face2DShaderFrag);
 	Shader wireframeShader = GenerateShader(Constants::Paths::wireframeShaderVertex, Constants::Paths::wireframeShaderFrag);
 	Shader text2DShader = GenerateShader(Constants::Paths::text2DShaderVertex, Constants::Paths::text2DShaderFrag);
 	Shader text3DShader = GenerateShader(Constants::Paths::text3DShaderVertex, Constants::Paths::text3DShaderFrag);
 	Shader particleShader = GenerateShader(Constants::Paths::particleShaderVertex, Constants::Paths::particleShaderFrag);
+	Shader snowShader = GenerateShader(Constants::Paths::snowShaderVertex, Constants::Paths::snowShaderFrag);
 
 	shaders.insert({Constants::Paths::lightShaderVertex, std::make_unique<Shader>(lightShader)});
 	shaders.insert({Constants::Paths::pointShaderVertex, std::make_unique<Shader>(pointShader)});
 	shaders.insert({Constants::Paths::faceShaderVertex, std::make_unique<Shader>(faceShader)});
+	shaders.insert({Constants::Paths::face2DShaderVertex, std::make_unique<Shader>(face2DShader)});
 	shaders.insert({Constants::Paths::wireframeShaderVertex, std::make_unique<Shader>(wireframeShader)});
 	shaders.insert({Constants::Paths::text2DShaderVertex, std::make_unique<Shader>(text2DShader)});
 	shaders.insert({Constants::Paths::text3DShaderVertex, std::make_unique<Shader>(text3DShader)});
 	shaders.insert({Constants::Paths::particleShaderVertex, std::make_unique<Shader>(particleShader)});
+	shaders.insert({Constants::Paths::snowShaderVertex, std::make_unique<Shader>(snowShader) });
 
 	// Setting default shaders
 	SetDefaultPointShader(pointShader);
@@ -328,6 +361,9 @@ void Rendering::LoadShadersAndFonts()
 	faceShader.AddGlobalUbo(Constants::UBO::Ids::cameraProps, Constants::UBO::Names::cameraProps);
 	wireframeShader.AddGlobalUbo(Constants::UBO::Ids::cameraProps, Constants::UBO::Names::cameraProps);
 	particleShader.AddGlobalUbo(Constants::UBO::Ids::cameraProps, Constants::UBO::Names::cameraProps);
+	snowShader.AddGlobalUbo(Constants::UBO::Ids::cameraProps, Constants::UBO::Names::cameraProps);
+
+	face2DShader.AddGlobalUbo(Constants::UBO::Ids::projection, Constants::UBO::Names::projection);
 
 	faceShader.AddGlobalUbo(Constants::UBO::Ids::lights, Constants::UBO::Names::lights);
 

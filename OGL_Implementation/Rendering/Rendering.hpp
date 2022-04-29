@@ -10,6 +10,7 @@
 // Project includes
 #include "OGL_Implementation\Entity\Entity.hpp"
 #include "OGL_Implementation\Text\Text.hpp"
+#include "OGL_Implementation\Image\Image2D.hpp"
 #include "LightRendering.hpp"
 #include "ParticleSystemRendering.hpp"
 #include "Constants.hpp"
@@ -42,6 +43,9 @@ public:
     static void DrawVertices(Entity & entity);
 
     static void RotateWireframeColor();
+
+    // Image
+    static void DrawImage(Image2D & image);
 
     // Text
     static void DrawText(Text2D & text);

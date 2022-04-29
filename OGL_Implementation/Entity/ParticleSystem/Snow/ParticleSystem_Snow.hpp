@@ -34,10 +34,18 @@ public:
 private:
 
 public:
-    /// @brief Polar Speed
-    float polarSpeed;
     /// @brief Particle
     float particleSpeed;
+    /// @brief Gravity
+    float gravity;
+    /// @brief Radius (area covered by the snow spawn)
+    float radius;
+    /// @brief Minimum Scale
+    float minScale;
+    /// @brief Maximum Scale
+    float maxScale;
+    /// @brief Steps between different scales (e.g stepScale(2) => [min, min + ((max-min) / (stepScale + 1)) * 1, min + ((max-min) / (stepScale + 1)) * 2, max]
+    unsigned int stepScale;
 
 private:
     float __theta;

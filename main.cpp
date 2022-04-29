@@ -10,13 +10,7 @@
 // C++ includes
 #include <format>
 
-// GLAD
-#include <glad/glad.h>
-
-// GLFW
-#include <GLFW/glfw3.h>
-
-// GLM Mathematics
+// GLM includes
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -36,15 +30,12 @@
 #include "OGL_Implementation\Rendering\Rendering.hpp"
 #include "OGL_Implementation\Text\Text.hpp"
 #include "OGL_Implementation\Light\Light.hpp"
-#include "OGL_Implementation\Entity\ParticleSystem\Snow\ParticleSystem_Snow.hpp"
 
-// Constants
+#include "OGL_Implementation\Entity\ParticleSystem\Snow\ParticleSystem_Snow.hpp"
+#include "OGL_Implementation\Image\Image2D.hpp"
+
 #include "Constants.hpp"
 
-// pointers to model / view / projection matrices
-glm::mat4 model(1);
-
-// The MAIN function, from here we start the application and run the game loop
 int main()
 {
 	Window * window = Window::Init(Constants::Window::windowName, Constants::Paths::windowIcon);
@@ -53,26 +44,40 @@ int main()
 
 	Rendering::Init();
 
-	Texture starTexture;
-	if (!GenerateTexture(Constants::Paths::star, starTexture))
+	Texture snowTexture;
+	if (!GenerateTexture(Constants::Paths::snowflake, snowTexture))
 	{
-		LOG_PRINT(stderr, "Couldn't generate texture '%s'\n", Constants::Paths::star);
+		LOG_PRINT(stderr, "Couldn't generate texture '%s'\n", Constants::Paths::snowflake);
+		return EXIT_FAILURE;
+	}
+
+	Texture backgroundTexture;
+	if (!GenerateTexture(Constants::Paths::snowyBackground, backgroundTexture))
+	{
+		LOG_PRINT(stderr, "Couldn't generate texture '%s'\n", Constants::Paths::snowyBackground);
 		return EXIT_FAILURE;
 	}
 
 	ParticleSystem_Snow snowSystem(
 		*Rendering::shaders.at(Constants::Paths::pointShaderVertex),
 		*Rendering::shaders.at(Constants::Paths::wireframeShaderVertex),
-		*Rendering::shaders.at(Constants::Paths::particleShaderVertex)
+		*Rendering::shaders.at(Constants::Paths::snowShaderVertex)
 	);
-	snowSystem.texture = starTexture;
-	snowSystem.lifeSpan = 30.0f;
-	snowSystem.polarSpeed = 3.0f;
-	snowSystem.particleSpeed = 5.0f;
-	snowSystem.frequency = 5;
-	snowSystem.maxParticles = 500;
+	snowSystem.texture = snowTexture;
+	snowSystem.radius = 11.0f;
+	snowSystem.frequency = 30.0f;
+	snowSystem.maxParticles = 300;
 
-	Camera camera(window->windowWidth(), window->windowHeight(), 0.0f, 0.0f, -50.0f);
+	Mesh meshImage = GenerateMeshImage();
+	Image2D background(meshImage,
+		*Rendering::shaders.at(Constants::Paths::pointShaderVertex),
+		*Rendering::shaders.at(Constants::Paths::wireframeShaderVertex),
+		*Rendering::shaders.at(Constants::Paths::face2DShaderVertex),
+		{0.5f, 0.5f}, 1.0f
+	);
+	background.SetTexture(backgroundTexture);
+
+	Camera camera(window->windowWidth(), window->windowHeight(), 0.0f, 0.0f, -20.0f);
 	camera.MovementSpeed *= 5.0f;
 	mainCamera = &camera;
 
@@ -114,13 +119,14 @@ int main()
 			}
 		}
 
-		ImGui::SliderFloat3("Position", glm::value_ptr(snowSystem.pos), 0.0f, 5.0f);
-		ImGui::SliderFloat3("Scale", glm::value_ptr(snowSystem.scale), 0.0f, 5.0f);
-
-		ImGui::SliderFloat("Polar Speed", &snowSystem.polarSpeed, 0.0f, 4.0f);
+		ImGui::SliderFloat("Spawn Radius", &snowSystem.radius, 0.0f, 15.0f);
+		ImGui::SliderFloat("Gravity (m/s^2)", &snowSystem.gravity, 0.1f, 9.81f);
 		ImGui::SliderFloat("Particle Speed", &snowSystem.particleSpeed, 0.0f, 20.0f);
+		ImGui::SliderFloat("Min Scale", &snowSystem.minScale, 0.1f, 2.0f);
+		ImGui::SliderFloat("Max Scale", &snowSystem.maxScale, 2.0f, 5.0f);
+		ImGui::SliderInt("Scale Steps", (int *)&snowSystem.stepScale, 1, 50);
 
-		ImGui::SliderFloat("Frequency", &snowSystem.frequency, 0.0f, 10.0f);
+		ImGui::SliderFloat("Frequency", &snowSystem.frequency, 0.0f, 50.0f);
 		ImGui::SliderFloat("Life Span", &snowSystem.lifeSpan, 0.0f, 60.0f);
 		ImGui::SliderInt("Max Particles", (int *)&snowSystem.maxParticles, 0, 5000);
 
@@ -141,6 +147,7 @@ int main()
 	});
 
 	camera.LookAt(snowSystem.pos);
+	snowSystem.pos.y = 3.0f;
 
 	float backgroundColor[4] = { 0.15f, 0.3f, 0.4f, 1.0f };
 
@@ -210,8 +217,11 @@ int main()
 		snowSystem.Update();
 		snowSystem.displayMode = DisplayMode;
 
+		Rendering::DrawImage(background);
+
 		// display mode & activate shader
 		Rendering::DrawParticleSystem(&snowSystem);
+
 		/*for (auto e : { })
 		{
 			if (DisplayMode & RenderingMode::VerticesMode)  Rendering::DrawVertices(*e);

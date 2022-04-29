@@ -25,8 +25,6 @@ Mesh_Sphere::Mesh_Sphere(float radius, int sectors, int stacks, bool smooth)
 {
     LOG_PRINT(Log::LogMainFileName, "Constructed\n");
 
-    glGenVertexArrays(2, &__verticesVAO);
-    glGenBuffers(2, &__verticesVBO);
     glGenBuffers(1, &__facesEBO);
 
     if (__smooth)
@@ -39,8 +37,6 @@ Mesh_Sphere::~Mesh_Sphere()
 {
     LOG_PRINT(Log::LogMainFileName, "Destroyed\n");
 
-    glDeleteVertexArrays(2, &__verticesVAO);
-    glDeleteBuffers(2, &__verticesVBO);
     glDeleteBuffers(1, &__facesEBO);
 }
 

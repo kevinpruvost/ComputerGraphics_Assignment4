@@ -14,6 +14,8 @@
 #include "Mesh_Base.hpp"
 #include "Mesh_Obj.hpp"
 #include "Mesh_Sphere.hpp"
+#include "Mesh_Image.hpp"
+
 #include "OGL_Implementation\DebugInfo\Log.hpp"
 
 /**
@@ -53,7 +55,11 @@ private:
     GLuint __meshId;
 };
 
-
+/**
+ * @brief Generates mesh from image parameters
+ * @return mesh
+*/
+Mesh GenerateMeshImage();
 /**
  * @brief Generates mesh from sphere parameters
  * @param radius 

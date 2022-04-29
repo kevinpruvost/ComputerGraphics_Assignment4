@@ -46,10 +46,7 @@ bool GUI::DrawGUI()
         "\t- Up:       Space\n"
         "\t- Down:     Left Ctrl\n"
         "- Camera Rotation: Mouse cursor\n"
-        "- Planet Rotation: Left/Right Arrows\n"
-        "- Object View Mode Switch: C\n"
         "- Wireframe Color Change: P\n"
-        "- Change Font: F\n"
     );
     ImGui::End();
 

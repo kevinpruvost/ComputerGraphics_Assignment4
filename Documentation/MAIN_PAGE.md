@@ -37,6 +37,7 @@ with an executable file to launch directly.
 - [Mesh_Base](class_mesh__base.html)
 - [Mesh_Sphere](class_mesh___sphere.html)
 - [Mesh_Obj](class_mesh___obj.html)
+- [Mesh_Image](class_mesh__image.html)
 - [Mesh](class_mesh.html)
 
 ### Light
@@ -67,6 +68,11 @@ with an executable file to launch directly.
 - [Font](class_font.html)
 - [Text2D](class_text2_d.html)
 - [Text3D](class_text3_d.html)
+
+### Image
+
+- [Image2D](class_image2_d.html)
+- [Image3D](class_image3_d.html)
 
 ### Rendering
 

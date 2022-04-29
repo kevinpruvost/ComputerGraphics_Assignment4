@@ -43,6 +43,12 @@ Mesh_Base::DrawMode Mesh::GetDrawMode() const
 	return meshesDB[__meshId]->GetDrawMode();
 }
 
+Mesh GenerateMeshImage()
+{
+	meshesDB.emplace_back(new Mesh_Image());
+	return Mesh(meshesDB.size() - 1);
+}
+
 Mesh GenerateMeshSphere(float radius, int sectors, int stacks, bool smooth)
 {
 	meshesDB.emplace_back(new Mesh_Sphere(radius, sectors, stacks, smooth));

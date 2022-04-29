@@ -12,7 +12,7 @@ namespace Constants
 {
 namespace Window
 {
-constexpr const char * windowName = "Assignment 3: Pruvost Kevin 2021400603";
+constexpr const char * windowName = "Assignment 4: Pruvost Kevin 2021400603";
 }; // !Constants::Window
 
 namespace Paths
@@ -24,6 +24,8 @@ constexpr const char * pointShaderVertex     = "resources/Shaders/point.vert.gls
 constexpr const char * pointShaderFrag       = "resources/Shaders/point.frag.glsl";
 constexpr const char * faceShaderVertex      = "resources/Shaders/face.vert.glsl";
 constexpr const char * faceShaderFrag        = "resources/Shaders/face.frag.glsl";
+constexpr const char * face2DShaderVertex    = "resources/Shaders/face2D.vert.glsl";
+constexpr const char * face2DShaderFrag      = "resources/Shaders/face2D.frag.glsl";
 constexpr const char * wireframeShaderVertex = "resources/Shaders/wireframe.vert.glsl";
 constexpr const char * wireframeShaderFrag   = "resources/Shaders/wireframe.frag.glsl";
 constexpr const char * lightShaderVertex     = "resources/Shaders/light.vert.glsl";
@@ -35,11 +37,13 @@ constexpr const char * text3DShaderVertex    = "resources/Shaders/text3D.vert.gl
 constexpr const char * text3DShaderFrag      = "resources/Shaders/text3D.frag.glsl";
 
 constexpr const char * particleShaderVertex = "resources/Shaders/particle.vert.glsl";
-constexpr const char * particleShaderFrag = "resources/Shaders/particle.frag.glsl";
+constexpr const char * particleShaderFrag   = "resources/Shaders/particle.frag.glsl";
+constexpr const char * snowShaderVertex     = "resources/Shaders/snow.vert.glsl";
+constexpr const char * snowShaderFrag       = "resources/Shaders/snow.frag.glsl";
 // Planets
 constexpr const char * star = "resources/Textures/Star.bmp";
 // Snow
-constexpr const char * snowflake = "resources/Textures/snow2.png";
+constexpr const char * snowflake       = "resources/Textures/snow2.png";
 constexpr const char * snowyBackground = "resources/Textures/snowy_background.png";
 // Fonts
 constexpr const char * arialFont = "resources/Fonts/arial.ttf";

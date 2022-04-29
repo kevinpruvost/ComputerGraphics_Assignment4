@@ -48,9 +48,11 @@ file (GLOB ASSIGNMENT_SOURCES
     OGL_Implementation/Entity/ParticleSystem/*.cpp
     OGL_Implementation/Entity/ParticleSystem/Spirals/*.cpp
     OGL_Implementation/Entity/ParticleSystem/Snow/*.cpp
+    OGL_Implementation/Image/*.cpp
     OGL_Implementation/Light/*.cpp
     OGL_Implementation/Rendering/*.cpp
     OGL_Implementation/Text/*.cpp
+    OGL_Implementation/Tools/*.cpp
 )
 file (GLOB ASSIGNMENT_HEADERS
     *.hpp
@@ -59,14 +61,16 @@ file (GLOB ASSIGNMENT_HEADERS
     OGL_Implementation/Mesh/*.hpp
     OGL_Implementation/Shader/*.hpp
     OGL_Implementation/Entity/*.hpp
+    OGL_Implementation/Entity/*.inl
     OGL_Implementation/Entity/ParticleSystem/*.hpp
     OGL_Implementation/Entity/ParticleSystem/*.inl
     OGL_Implementation/Entity/ParticleSystem/Spirals/*.hpp
     OGL_Implementation/Entity/ParticleSystem/Snow/*.hpp
-    OGL_Implementation/Entity/*.inl
+    OGL_Implementation/Image/*.hpp
     OGL_Implementation/Light/*.hpp
     OGL_Implementation/Rendering/*.hpp
     OGL_Implementation/Text/*.hpp
+    OGL_Implementation/Tools/*.hpp
 )
 
 add_executable(Assignment4

@@ -14,9 +14,6 @@ Mesh_Obj::Mesh_Obj(const Obj & obj)
 {
 	LOG_PRINT(Log::LogMainFileName, "Constructed\n");
 
-	glGenVertexArrays(2, &__verticesVAO);
-	glGenBuffers(2, &__verticesVBO);
-
 	// bind VAO and VBO for drawing vertices
 	bindVertices(obj);
 	// bind VAO and VBO for drawing faces
@@ -26,9 +23,6 @@ Mesh_Obj::Mesh_Obj(const Obj & obj)
 Mesh_Obj::~Mesh_Obj()
 {
 	LOG_PRINT(Log::LogMainFileName, "Destroyed\n");
-
-	glDeleteVertexArrays(2, &__verticesVAO);
-	glDeleteBuffers(2, &__verticesVBO);
 }
 
 GLuint Mesh_Obj::GetFacesEBO() const

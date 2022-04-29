@@ -13,11 +13,17 @@
 Mesh_Base::Mesh_Base()
 {
 	LOG_PRINT(Log::LogMainFileName, "Constructed\n");
+
+	glGenVertexArrays(2, &__verticesVAO);
+	glGenBuffers(2, &__verticesVBO);
 }
 
 Mesh_Base::~Mesh_Base()
 {
 	LOG_PRINT(Log::LogMainFileName, "Destroyed\n");
+
+	glDeleteVertexArrays(2, &__verticesVAO);
+	glDeleteBuffers(2, &__verticesVBO);
 }
 
 GLuint Mesh_Base::GetVerticesVAO() const

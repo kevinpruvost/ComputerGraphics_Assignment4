@@ -82,8 +82,8 @@ void ParticleSystemRendering::DrawParticleSystem(ParticleSystem_Base * particleS
 {
     const auto & particles = particleSystem->GetParticles();
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE);
-    glDepthMask(GL_FALSE);
+    //glBlendFunc(GL_ONE_MINUS_SRC_COLOR, GL_DST_ALPHA);
+    //glDepthMask(GL_FALSE);
 
     const glm::mat4 & parentMatrix = particleSystem->GetModelMatrix();
 
@@ -141,6 +141,6 @@ void ParticleSystemRendering::DrawParticleSystem(ParticleSystem_Base * particleS
         }
     }
 
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Blending options
-    glDepthMask(GL_TRUE);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); // Blending options
+    //glDepthMask(GL_TRUE);
 }
