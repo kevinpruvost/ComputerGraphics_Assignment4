@@ -10,9 +10,9 @@ For this assignment, the main theme was `Snow Particles`.
 
 The objectives here were:
 
-1) Particle effect of snowing
-2) Snowflakes have different sizes.
-3) Start with less snowflakes and gradually increase over time.
+- Particle effect of snowing.
+- Snowflakes have different sizes.
+- Start with less snowflakes and gradually increase over time.
 
 # Compilation
 
