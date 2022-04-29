@@ -1,4 +1,4 @@
-# Assignment 2 of Fundamentals of Computer Graphics: Planets Rotation
+# Assignment 4 of Fundamentals of Computer Graphics: Snow Particles
 
 <p align="center">
   <img src="https://github.com/kevinpruvost/OpenImages/blob/miscellaneous/images/1200px-Tsinghua_University_Logo.svg.png" width=250/><br/><br/>
@@ -6,13 +6,13 @@
 
 # Introduction
 
-For this assignment, the main theme was `Planets Rotation`.
+For this assignment, the main theme was `Snow Particles`.
 
 The objectives here were:
 
-1. Set the orbits, size and textures of the planets
-2. Add keyboard control to increase/decrease the rotation speed
-3. Add fonts. Each planet moves with its name
+1) Particle effect of snowing
+2) Snowflakes have different sizes.
+3) Start with less snowflakes and gradually increase over time.
 
 # Compilation
 
@@ -25,22 +25,19 @@ Though, as CMake permits it, you will be easily able to compile on other platfor
 
 For my Assignment, I got all these points covered:
 
-- Textured planets
-- Font change
-- Rotation Speed Control
+- Snowing Particle Effects
+- Snowflakes have different sizes that can be set
+- Count of snowflakes that gradually increases over time
 - Bonus:
-    - Camera Movement + Rotation (can be enabled/disabled)
-    - Simple Lighting (with the Sun being a PointLight)
-    - Focus View System
     - Display Mode (Vertices, Wireframe, Faces)
-    - Luminosity parameters Control
     - Enable/Disable GUI
+    - Particle Systems parameters can be edited
 
 ## How to use it
 
-[![Demo](embed.png)](https://youtu.be/wFGgL5PE7sc)
+[![Demo](embed.png)](https://youtu.be/7NxV2O9rknI)
 
-You can launch the `Assignment2.exe`directly, if you already have Visual C++ Redistribuable.
+You can launch the `Assignment4.exe`directly, if you already have Visual C++ Redistribuable.
 
 The program was compiled in Release mode.
 
@@ -48,10 +45,7 @@ As it is displayed in the program, here are the controls by order of priority fo
 
 ## Controls
 
-- Change Font: F
 - Enable/Disable GUI: T
-- Change Rotation Speed: ⬅️➡️
-- Object View Mode Switch: C
 - Wireframe Color Change: P
 - Camera/Cursor Lock: L
 - Camera Movement:
@@ -64,12 +58,18 @@ As it is displayed in the program, here are the controls by order of priority fo
 
 ## Additional Interactions
 
-- You can change the `Title color`
-- You can change the `Planets Rotation speed` with a slider
-- You can change every parameters related to the sun’s emitted light
+- You can change every parameters related to the particle systems like:
+    - Particle Speed
+    - Spawn Radius
+    - Gravity (Acceleration on Y axis) of particles, speed limited to the value of Gravity
+    - Particle Min & Max Scales
+    - Steps between Min & Max Scales
+    - Frequency of emitted particles (particles/second)
+    - Life Span of each particle (in seconds)
+    - Maximum count of Particles
 - You can change the Display Mode on the `Display Mode`menu.
-- You can select a Planet to focus and that will lock your camera on, though you can move and the camera will only rotate towards the focused planet.
-- You can click on the `Activate the Funny`button to replace every planet with a giant rat
+- You can change the FPS cap/limit
+- You can change the Time multiplier (multiplies deltaTime)
 
 # Code Architecture
 
@@ -77,11 +77,4 @@ The Complete Documentation is available in the project, in the Code Architecture
 
 ## Documentation
 
-There is a documentation available [here](https://kevinpruvost.github.io/ComputerGraphics_Assignment2/) or in `docs/index.html` if you want to have a better view on the classes I made.
-
-# Important Points/Personal Reminders
-
-- Uniform Buffer Object tend to be very useful within contexts where uniform variables do not change through every loop. We can just send these variables to Uniform Buffer Objects to make less calls to the GPU.
-- Getting Uniform Locations is a very heavy process, it is better to store the return values CPU side to limit GPU calls.
-
-![Untitled](Screenshots/Untitled.png)
+There is a documentation available [here](https://kevinpruvost.github.io/ComputerGraphics_Assignment4/) or in `docs/index.html` if you want to have a better view on the classes I made.
